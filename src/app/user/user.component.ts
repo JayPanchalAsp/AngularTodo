@@ -1,4 +1,4 @@
-import { Component,Input } from '@angular/core';
+import { Component,Input,Output,output,EventEmitter } from '@angular/core';
 import { DUMMY_USERS } from '../dummy-users';
 
 let a: number = 1;
@@ -12,13 +12,19 @@ let a: number = 1;
 })
 
 export class UserComponent {
+    @Input({required:true}) id!: string;
     @Input({required:true}) avatar!: string;
-    @Input({required:true}) name!: string;
-  
+    @Input({required:true}) name!: string; 
+    @Output() select = new EventEmitter<string>();
+    //select = output<string>();
+
     get ImagePath(){
       return 'assets/users/'+ this.avatar
     }
-    onSelectedUser() {}
+
+    onSelectedUser() {
+        this.select.emit(this.id);
+    }
     // selectedUser = signal(DUMMY_USERS[a]) 
     // ImagePath = computed(() => '../assets/users/'+ this.selectedUser().avatar)
     // // get ImagePath(){
